@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { use, useEffect, useState } from "react"
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import styles from './pdf-extract-ui.module.css'
@@ -30,9 +30,34 @@ export function PdfExtractUi() {
   const [images, setImages] = useState<ImageData[]>([]);
   const [status, setStatus] = useState<string>("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const apiClient = new ApiClient('https://api.doctractor.com/', 'doctractor', 'Aekie2ao');
+
+  const checkResult = async (taskId: string) => {
+    let isDone = false;
+    while (!isDone) {
+      const response = await apiClient.getResult(taskId);
+      console.log(response);
+      if (response.state === 'PROGRESS' || response.state === 'PENDING') {
+          setStatus(response.status + (response.info && response.info.elapsed_time ? ` (${response.info.elapsed_time.toFixed(2)}s)` : ''));
+        await new Promise(resolve => setTimeout(resolve, 2000)); // wait for 2 seconds before checking again
+      } else {
+        if (response.state === 'SUCCESS') {
+          setDocumentText(response.result);
+          setStatus('');
+        } 
+        isDone = true;
+        localStorage.removeItem('taskId');
+      }
+    };
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('taskId')) {
+      checkResult(localStorage.getItem('taskId') as string);
+    }
+  });  
 
   const executeRequest = async (file:File) => {
-    const apiClient = new ApiClient('https://api.doctractor.com/', 'doctractor', 'Aekie2ao');
     const formData = new FormData();
     formData.append('file', file);
     formData.append('prompt', prompt);
@@ -42,23 +67,7 @@ export function PdfExtractUi() {
     apiClient.uploadFile(formData).then(response => {
       console.log(response);
       const taskId = response.task_id;
-      const checkResult = async (taskId: string) => {
-        let isDone = false;
-        while (!isDone) {
-          const response = await apiClient.getResult(taskId);
-          console.log(response);
-          if (response.state === 'PROGRESS') {
-              setStatus(response.status + (response.info && response.info.elapsed_time ? ` (${response.info.elapsed_time.toFixed(2)}s)` : ''));
-            await new Promise(resolve => setTimeout(resolve, 2000)); // wait for 2 seconds before checking again
-          } else {
-            if (response.state === 'SUCCESS') {
-              setDocumentText(response.result);
-              setStatus('');
-            } 
-            isDone = true;
-          }
-        };
-      }
+      localStorage.setItem('taskId', taskId as string);
       checkResult(response.task_id as string);
     }).catch(error => {
       console.error(error);

@@ -1,25 +1,23 @@
-# Safely send PDF documents to LLM
+# pdf-extract-api demo app
 
-This tool uses in-browser **Tesseract OCR** to extract text from PDF files and images. 
+This tool uses [pdf-extract-api](https://github.com/CatchTheTornado/pdf-extract-api) to extract text from PDF files. 
 
-Then, it anonymizes it by removing or **PII (Personally Identitable Information)** so you can safely send it to ChatGPT. 
-What is cool you might use it for example to scan PDF documents before using them with non-multimodal LLMS (Ollama ...).
+Read how to <a href="https://github.com/CatchTheTornado/pdf-extract-api?tab=readme-ov-file#getting-started">Get started with the API and CLI</a>.
 
-In this example we do use ChatGPT to enhance and fix Tesseract issues as well. 
-This is a PoC project intended to be used for privacy-critical LLM cases, like health data etc.
+<strong>Warning: </strong> This is a demo version of the API and it may not be available at all times. The processing time may be longer than expected. Please DO NOT upload any sensitive, confidential or personal data. You are doing it at your own risk.
 
-## Getting Started
+## Online access
+
+This demo is available online: <a href="https://demo.doctractor.com/">https://demo.doctractor.com/</a>
+
+
+## How to deploy it locally?
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 **Note:** On Apple Silicon please run these commands first (you will neeed [Homebrew](https://brew.sh/)): 
