@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import  colors  from 'tailwindcss/colors'
 
 const config: Config = {
   content: [
@@ -15,6 +16,7 @@ const config: Config = {
       },
     },
       colors: {
+            ...colors,
             "border": "hsl(var(--border))",
             "input": "hsl(var(--input))",
             "ring": "hsl(var(--ring))",

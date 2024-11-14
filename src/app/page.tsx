@@ -1,7 +1,7 @@
-import { TesseractAnonymizer } from "@/components/tesseract-anonymizer";
+import { PdfExtractUi } from "@/components/pdf-extract-ui";
 
 export default function Home() {
   return (
-    <TesseractAnonymizer />
+    <PdfExtractUi />
   );
 }

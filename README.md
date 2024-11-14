@@ -22,5 +22,13 @@ pnpm dev
 bun dev
 ```
 
+**Note:** On Apple Silicon please run these commands first (you will neeed [Homebrew](https://brew.sh/)): 
+
+```bash
+xcode-select --install
+brew install pkg-config cairo pango libpng jpeg giflib librsvg
+CPLUS_INCLUDE_PATH=/opt/homebrew/include npm install canvas
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
