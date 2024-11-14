@@ -180,7 +180,18 @@ export function PdfExtractUi() {
                 Status: {status}
               </div>
             ): '')}
+        <div className="mt-4">
+          <h3 className="text-lg">Next steps</h3>
+            <ul className="list-disc list-inside pl-4">
+                <li>Check the <a href="https://github.com/CatchTheTornado/pdf-extract-api?tab=readme-ov-file#getting-started" className="underline text-blue-600">Getting started guide</a></li>
+                <li>Read the <a href="https://github.com/CatchTheTornado/pdf-extract-api?tab=readme-ov-file#endpoints" className="underline text-blue-600">API and CLI docs</a></li>
+                <li>Get the Typescript <a href="https://www.npmjs.com/package/pdf-extract-api-client" className="underline text-blue-600">API client</a></li>
+                <li><a className="underline text-blue-600" href="mailto:info@catchthetornado.com?subject=Commercial%20Extract%20API%20from%20demo">Contact us</a> if you require a hosted commercial version, GDPR safe, SLA etc.</li>
+            </ul>
         </div>
+
+        </div>
+
       </main>
       <footer className="bg-muted text-muted-foreground py-4 px-6 flex justify-between items-center gap-4 text-sm">
         <div className="flex justify-between w-full">
