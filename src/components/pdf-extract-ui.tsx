@@ -187,6 +187,7 @@ export function PdfExtractUi() {
                 <li>Read the <a href="https://github.com/CatchTheTornado/pdf-extract-api?tab=readme-ov-file#endpoints" className="underline text-blue-600">API and CLI docs</a></li>
                 <li>Get the Typescript <a href="https://www.npmjs.com/package/pdf-extract-api-client" className="underline text-blue-600">API client</a></li>
                 <li><a className="underline text-blue-600" href="mailto:info@catchthetornado.com?subject=Commercial%20Extract%20API%20from%20demo">Contact us</a> if you require a hosted commercial version, GDPR safe, SLA etc.</li>
+                <li>Check the <a className="underline text-blue-600" href="https://github.com/CatchTheTornado/pdf-extract-api-demo">source code of this demo</a></li>
             </ul>
         </div>
 
