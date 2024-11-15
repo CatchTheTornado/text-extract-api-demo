@@ -25,11 +25,15 @@ export type ImageData = {
 
 export function PdfExtractUi() {
   
+  const [usePrompt, setUsePrompt] = useState<boolean>(false);
   const [prompt, setPrompt] = useState<string>("Fix typos, remove Personal Data (addresses, name, last name, phone number), convert to JSON and return only JSON structure");
   const  [documentText, setDocumentText] = useState<string>("");
   const [images, setImages] = useState<ImageData[]>([]);
   const [status, setStatus] = useState<string>("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [strategy, setStrategy] = useState<string>("marker");
+  const [model, setModel] = useState<string>("llama3.1");
+
   const apiClient = new ApiClient('https://api.doctractor.com/', 'doctractor', 'Aekie2ao');
 
   const checkResult = async (taskId: string) => {
@@ -44,7 +48,10 @@ export function PdfExtractUi() {
         if (response.state === 'SUCCESS') {
           setDocumentText(response.result);
           setStatus('');
-        } 
+        }
+        if (response.state === 'FAILURE') {
+          setStatus(response.status);
+        }
         isDone = true;
         localStorage.removeItem('taskId');
       }
@@ -55,14 +62,15 @@ export function PdfExtractUi() {
     if (localStorage.getItem('taskId')) {
       checkResult(localStorage.getItem('taskId') as string);
     }
-  });  
+  }, []);  
 
   const executeRequest = async (file:File) => {
+    setDocumentText('');
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('prompt', prompt);
-    formData.append('strategy', 'marker');
-    formData.append('model', 'llama3.1')
+    if (usePrompt) formData.append('prompt', prompt);
+    formData.append('strategy', strategy);
+    formData.append('model', model)
     formData.append('ocr_cache', 'true');
     apiClient.uploadFile(formData).then(response => {
       console.log(response);
@@ -140,6 +148,12 @@ export function PdfExtractUi() {
           <div className="mt-3">
             <strong>Warning: </strong> This is a demo version of the API and it may not be available at all times. The processing time may be longer than expected. Please DO NOT upload any sensitive, confidential or personal data. You are doing it at your own risk.
           </div>
+          {(status ? (
+              <div className="flex items-center gap-4 border-2 bg-orange-100 border-dashed border-orange-400 p-4 mt-5">
+                Status: {status}
+              </div>
+            ): '')}
+
           <div className="flex items-center gap-4">
             <label htmlFor="image-upload" className="cursor-pointer">
               <div className="bg-zinc-950 text-white text-sm px-4 py-2 rounded-md mt-5">
@@ -166,29 +180,44 @@ export function PdfExtractUi() {
                       alt={image.displayName}
                     />
                   ))}            
-              </div>    
+              </div>
+              <div className="mt-4">
+                <label>OCR Strategy:</label>
+                <select className="w-1/2 p-2 bg-white border-black border-solid border-slate-400 m-2 w-40 border" value={strategy} onChange={(e) => setStrategy(e.target.value) }>
+                  <option value="marker">marker</option>
+                </select>
+              </div>
+
               {documentText ? (                
                 <Markdown className={styles.markdown + ' border border-dashed border-green-200 p-5'} remarkPlugins={[remarkGfm]}>
                   {documentText}
                 </Markdown>   
               ): ''}
-          <div className="mt-4">
-            <div className="flex items-center gap-4">
+          <div className="mt-4 border border-dashed p-4 border-slate-400">
+            <div className="flex items-center">
+              <input id="usePrompt" type="checkbox" checked={usePrompt} onChange={(e) => { setUsePrompt(e.target.checked); }} /><label  htmlFor="usePrompt" className="ml-2">Transform Extracted text with LLM</label>
+            </div>  
+            <div className="mt-4">
               Enter the prompt to transform the PDF file:
             </div>
             <div className="flex items-center gap-4">
-              <textarea className="w-full h-32 p-2 bg-white border-black border-dashed border" placeholder="Enter a prompt to transform uploaded PDF - for example: Conert and return only JSON" value={prompt} onChange={(e) => setPrompt(e.target.value) }  />
+              <textarea disabled={!usePrompt} className="w-full h-32 p-2 bg-white border-slate-400 border-solid border" placeholder="Enter a prompt to transform uploaded PDF - for example: Conert and return only JSON" value={prompt} onChange={(e) => setPrompt(e.target.value) }  />
+            </div>
+            <div className="flex items-center gap-4 mt-4">
+              <label>AI Model:</label>
+              <select disabled={!usePrompt} className="w-1/2 p-2 w-40 bg-white border-slate-400 border-solid border" value={model} onChange={(e) => setModel(e.target.value) }>
+                <option value="llama3.1">llama3.1:7b</option>
+                <option value="llama3.1:70b">llama3.1:70b</option>
+                <option value="gemma2">gemma2</option>
+                <option value="gemma2:27b">gemma2:27b</option>
+                {/* <option value="llama3.2">llama3.2:3b</option> */}
+              </select>
             </div>
 
           </div>
           <div className="mt-4">
             <Button className="bg-primary text-primary-foreground" onClick={() => { if(uploadedFile) { executeRequest(uploadedFile) } else { setStatus('Select PDF file first') } }}><SendIcon className="w-4 h-4 mr-4" /> Transform!</Button>
           </div>
-          {(status ? (
-              <div className="flex items-center gap-4 border border-dashed border-orange p-4 mt-5">
-                Status: {status}
-              </div>
-            ): '')}
         <div className="mt-4">
           <h3 className="text-lg">Next steps</h3>
             <ul className="list-disc list-inside pl-4">
