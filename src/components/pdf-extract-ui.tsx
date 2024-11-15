@@ -13,7 +13,7 @@ import { SyncRedactor  } from '@/lib/redactor';
 import { createOpenAI, openai } from '@ai-sdk/openai';
 import { CallWarning, convertToCoreMessages, FinishReason, streamText } from 'ai';
 import { ApiClient, OcrRequest } from 'pdf-extract-api-client';
-import { CopyrightIcon, GithubIcon, SendIcon, StarIcon } from "lucide-react"
+import { CommandIcon, CopyrightIcon, GithubIcon, SendIcon, ShellIcon, StarIcon } from "lucide-react"
 
 const redactor = new SyncRedactor();
 
@@ -53,7 +53,7 @@ export function PdfExtractUi() {
           setStatus(response.status);
         }
         isDone = true;
-        localStorage.removeItem('taskId');
+//        localStorage.removeItem('taskId');
       }
     };
   }
@@ -65,7 +65,7 @@ export function PdfExtractUi() {
   }, []);  
 
   const executeRequest = async (file:File) => {
-    setDocumentText('');
+
     const formData = new FormData();
     formData.append('file', file);
     if (usePrompt) formData.append('prompt', prompt);
@@ -149,9 +149,21 @@ export function PdfExtractUi() {
             <strong>Warning: </strong> This is a demo version of the API and it may not be available at all times. The processing time may be longer than expected. Please DO NOT upload any sensitive, confidential or personal data. You are doing it at your own risk.
           </div>
           {(status ? (
+            <div>
               <div className="flex items-center gap-4 border-2 bg-orange-100 border-dashed border-orange-400 p-4 mt-5">
                 Status: {status}
               </div>
+              {localStorage.getItem('taskId') ? (
+                <div className="flex items-center gap-4 border-2 bg-orange-100 border-dashed border-slate-400 p-4 mt-5">
+                  <div className="flex gap-2 items-center">
+                    Task Id: {localStorage.getItem('taskId')}
+                  </div>
+                  <div className="flex gap-2 items-center">
+                  <CommandIcon className="w-4 h-4"/><span className="font-mono">curl -X GET <a href={ "https://api.doctractor.com/result/" + localStorage.getItem('taskId')}>https://api.doctractor.com/result/{localStorage.getItem('taskId')}</a></span>
+                  </div>
+                </div>
+              ): ''}
+            </div>
             ): '')}
 
           <div className="flex items-center gap-4">
@@ -216,7 +228,12 @@ export function PdfExtractUi() {
 
           </div>
           <div className="mt-4">
-            <Button className="bg-primary text-primary-foreground" onClick={() => { if(uploadedFile) { executeRequest(uploadedFile) } else { setStatus('Select PDF file first') } }}><SendIcon className="w-4 h-4 mr-4" /> Transform!</Button>
+            <Button className="bg-primary text-primary-foreground" onClick={() => {
+              setDocumentText('');
+              setStatus('');
+              window.scrollTo(0, 0);
+              localStorage.removeItem('taskId');
+              if(uploadedFile) { executeRequest(uploadedFile) } else { setStatus('Select PDF file first') } }}><SendIcon className="w-4 h-4 mr-4" /> Transform!</Button>
           </div>
         <div className="mt-4">
           <h3 className="text-lg">Next steps</h3>
