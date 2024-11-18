@@ -31,7 +31,7 @@ export function PdfExtractUi() {
   const [images, setImages] = useState<ImageData[]>([]);
   const [status, setStatus] = useState<string>("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [strategy, setStrategy] = useState<string>("marker");
+  const [strategy, setStrategy] = useState<string>("llama_vision");
   const [model, setModel] = useState<string>("llama3.1");
 
   const apiClient = new ApiClient('https://api.doctractor.com/', 'doctractor', 'Aekie2ao');
@@ -196,6 +196,7 @@ export function PdfExtractUi() {
               <div className="mt-4">
                 <label>OCR Strategy:</label>
                 <select className="w-1/2 p-2 bg-white border-black border-solid border-slate-400 m-2 w-40 border" value={strategy} onChange={(e) => setStrategy(e.target.value) }>
+                  <option value="llama_vision">llama_vision</option>
                   <option value="marker">marker</option>
                 </select>
               </div>
