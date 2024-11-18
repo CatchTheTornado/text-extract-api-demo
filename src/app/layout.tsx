@@ -16,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script async src="https://w.appzi.io/w.js?token=r0FdE"></script>        
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
