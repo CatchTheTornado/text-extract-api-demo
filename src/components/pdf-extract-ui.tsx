@@ -12,7 +12,7 @@ import { createWorker, OEM, PSM } from 'tesseract.js';
 import { SyncRedactor  } from '@/lib/redactor';
 import { createOpenAI, openai } from '@ai-sdk/openai';
 import { CallWarning, convertToCoreMessages, FinishReason, streamText } from 'ai';
-import { ApiClient, OcrRequest } from 'pdf-extract-api-client';
+import { ApiClient, OcrRequest } from 'text-extract-api-client';
 import { CommandIcon, CopyrightIcon, GithubIcon, SendIcon, ShellIcon, StarIcon } from "lucide-react"
 
 const redactor = new SyncRedactor();
@@ -140,10 +140,10 @@ export function PdfExtractUi() {
       <main className="flex-1 bg-background text-foreground p-8 overflow-auto text-sm">
         <div className="prose max-w-3xl mx-auto">
           <div>
-          This is a demo of the <a href="https://github.com/CatchTheTornado/pdf-extract-api" className="font-bold">PDF Extract API</a>. Upload a PDF file and enter the prompt to extract or transform the content exactly as you want. For example transforming it to JSON structure or to Markdown format.
+          This is a demo of the <a href="https://github.com/CatchTheTornado/text-extract-api" className="font-bold">PDF Extract API</a>. Upload a PDF file and enter the prompt to extract or transform the content exactly as you want. For example transforming it to JSON structure or to Markdown format.
           </div>
           <div className="mt-3">
-            If you need <strong>pdf-extract-api</strong> for commercial purposes with guaranteed processing and storage resources plsease <a href="mailto:info@catchthetornado.com?subject=Commercial%20Extract%20API%20from%20demo" className="font-bold">contact us</a>
+            If you need <strong>text-extract-api</strong> for commercial purposes with guaranteed processing and storage resources plsease <a href="mailto:info@catchthetornado.com?subject=Commercial%20Extract%20API%20from%20demo" className="font-bold">contact us</a>
           </div>
           <div className="mt-3">
             <strong>Warning: </strong> This is a demo version of the API and it may not be available at all times. The processing time may be longer than expected. Please DO NOT upload any sensitive, confidential or personal data. You are doing it at your own risk.
@@ -239,11 +239,11 @@ export function PdfExtractUi() {
         <div className="mt-4">
           <h3 className="text-lg">Next steps</h3>
             <ul className="list-disc list-inside pl-4">
-                <li>Check the <a href="https://github.com/CatchTheTornado/pdf-extract-api?tab=readme-ov-file#getting-started" className="underline text-blue-600">Getting started guide</a></li>
-                <li>Read the <a href="https://github.com/CatchTheTornado/pdf-extract-api?tab=readme-ov-file#endpoints" className="underline text-blue-600">API and CLI docs</a></li>
-                <li>Get the Typescript <a href="https://www.npmjs.com/package/pdf-extract-api-client" className="underline text-blue-600">API client</a></li>
+                <li>Check the <a href="https://github.com/CatchTheTornado/text-extract-api?tab=readme-ov-file#getting-started" className="underline text-blue-600">Getting started guide</a></li>
+                <li>Read the <a href="https://github.com/CatchTheTornado/text-extract-api?tab=readme-ov-file#endpoints" className="underline text-blue-600">API and CLI docs</a></li>
+                <li>Get the Typescript <a href="https://www.npmjs.com/package/text-extract-api-client" className="underline text-blue-600">API client</a></li>
                 <li><a className="underline text-blue-600" href="mailto:info@catchthetornado.com?subject=Commercial%20Extract%20API%20from%20demo">Contact us</a> if you require a hosted commercial version, GDPR safe, SLA etc.</li>
-                <li>Check the <a className="underline text-blue-600" href="https://github.com/CatchTheTornado/pdf-extract-api-demo">source code of this demo</a></li>
+                <li>Check the <a className="underline text-blue-600" href="https://github.com/CatchTheTornado/text-extract-api-demo">source code of this demo</a></li>
             </ul>
         </div>
 
@@ -256,7 +256,7 @@ export function PdfExtractUi() {
             <CopyrightIcon /> 2024 CatchTheTornado
           </div>
           <div className="flex items-center gap-2">
-            <a href="https://github.com/CatchTheTornado/pdf-extract-api" className="flex items-center gap-2">
+            <a href="https://github.com/CatchTheTornado/text-extract-api" className="flex items-center gap-2">
               <GithubIcon className="w-4 h-4" /> Github
             </a>
           </div>

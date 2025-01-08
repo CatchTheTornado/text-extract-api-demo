@@ -3834,9 +3834,9 @@ path2d@^0.2.0:
   resolved "https://registry.npmjs.org/path2d/-/path2d-0.2.2.tgz"
   integrity sha512-+vnG6S4dYcYxZd+CZxzXCNKdELYZSKfohrk98yajCo1PtRoDgCTrrwOvK1GT0UoAdVszagDVllQc0U1vaX4NUQ==
 
-pdf-extract-api-client@^1.0.2:
+text-extract-api-client@^1.0.2:
   version "1.0.2"
-  resolved "https://registry.npmjs.org/pdf-extract-api-client/-/pdf-extract-api-client-1.0.2.tgz"
+  resolved "https://registry.npmjs.org/text-extract-api-client/-/text-extract-api-client-1.0.2.tgz"
   integrity sha512-ZY7INRfSRwUA1sP7mmIm0W/adRKGT+CQsK/96tYHH2sylIBvCb9yq03zjqktL5YB0Hhh/2VuR3waRW3kFw7srA==
   dependencies:
     axios "^0.21.1"
